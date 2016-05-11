@@ -55,27 +55,31 @@ _p.SVGMold  = function( type, options ){
 /*** COLORED CONSOLE LOG ***/
 
 _p.clog = function( msg ){
+   var args          = [].slice.apply(arguments);
+  if(window.chrome){
+    var tag           = "clog";
+   
+    var currentScript = "";
 
-  // TODO: CHECK IF IS CHROME WHERE CONSOLE CSS IS SUPPORTED: ( window.chrome )
+    if ( document.currentScript ){
+      currentScript = document.currentScript.src.split('/');
+      currentScript = currentScript[currentScript.length-1].split("?")[0];
+      tag = currentScript;
+    }
 
-  var tag           = "clog";
-  var args          = [].slice.apply(arguments);
-  var currentScript = "";
+    args.unshift(
+      '%c [ %s ]: %c',
+      'background: #222; color: #bada55',
+      tag,
+      'background: #222; color: #2ada45'
+    );
 
-  if ( document.currentScript ){
-    currentScript = document.currentScript.src.split('/');
-    currentScript = currentScript[currentScript.length-1].split("?")[0];
-    tag = currentScript;
+    console.log.apply( console, args );
   }
-
-  args.unshift(
-    '%c [ %s ]: %c',
-    'background: #222; color: #bada55',
-    tag,
-    'background: #222; color: #2ada45'
-  );
-
-  console.log.apply( console, args );
+  else{
+    console.warning("Console CSS is not supported in this browser.");
+     console.log.apply( console, args );
+  }
 
 }
 
