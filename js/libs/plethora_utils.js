@@ -55,12 +55,16 @@ _p.SVGMold  = function( type, options ){
 /*** COLORED CONSOLE LOG ***/
 
 _p.clog = function( msg ){
-   var args          = [].slice.apply(arguments);
-  if(window.chrome){
-    var tag           = "clog";
-   
+  var args          = [].slice.apply(arguments);
+  //Check if browser supports CSS console
+  //Internet explorer does not support it.
+  //Firefox does not support it
+  //Use navigator.vendor to detect browser
+  //Because chrome returns Netscape as vendor name but "Coogle Inc." as navigator.vendor
+  isBrowserSupported=navigator.appName != "Netscape" || navigator.vendor != "";
+  if(isBrowserSupported){
+    var tag= "clog";
     var currentScript = "";
-
     if ( document.currentScript ){
       currentScript = document.currentScript.src.split('/');
       currentScript = currentScript[currentScript.length-1].split("?")[0];
@@ -77,7 +81,8 @@ _p.clog = function( msg ){
     console.log.apply( console, args );
   }
   else{
-    console.warning("Console CSS is not supported in this browser.");
+    //NOTE:Internet explorer does not support console.warning
+    console.log("Console CSS is not supported in this browser.");
      console.log.apply( console, args );
   }
 
