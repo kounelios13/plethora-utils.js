@@ -60,7 +60,7 @@ _p.clog = function( msg ){
   //Internet explorer does not support it.
   //Firefox  supports it
   //Safari 5 does not support CSS console
-   var supported_browsers=["Chrome","Firefox"];
+   var supported_browsers=["Chrome","Firefox",];
 
   navigator.getBrowserName= (function(){
       var ua= navigator.userAgent, tem,
@@ -76,9 +76,9 @@ _p.clog = function( msg ){
       M= M[2]? [M[1]/*, M[2]*/]: [navigator.appName/*, navigator.appVersion*/, '-?'];
       if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
       return M.join(' ');
-  })();
+  })(); 
   var current_browser=navigator.getBrowserName;
-  var isBrowserSupported = supported_browsers.indexOf(current_browser) != -1;
+  var isBrowserSupported = supported_browsers.indexOf(current_browser) != -1 || current_browser.includes("Opera");
   if(isBrowserSupported){
     //Current browser supports what we want to do
     var tag= "clog";
